@@ -1,0 +1,18 @@
+{% extends 'post/base.html' %}
+{% load static %}
+{% load materializecss %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.title|materializecss }}
+                {{ form.author|materializecss }}
+                {{ form.body|materializecss }}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

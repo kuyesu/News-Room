@@ -1,0 +1,27 @@
+{% extends "home/base.html" %} 
+{% load static %}
+{% block content %}
+<main>
+    <!-- Trending Area Start -->
+        {% include "home/components/trending.html" %}
+    <!-- Trending Area End -->
+    <!--   Weekly-News start -->
+        {% include "home/components/weeklyNews.html" %}          
+    <!-- End Weekly-News -->
+   <!-- Whats New Start -->
+        {% include "home/components/whatisnew.html" %}
+    <!-- Whats New End -->
+    <!--   Weekly2-News start -->
+        {% include "home/components/topstories.html" %}       
+    <!-- End Weekly-News -->
+    <!-- Start Youtube -->
+        {% include "home/components/youtube.html" %}
+    <!-- End Start youtube -->
+    <!--  Recent Articles start -->
+        {% include "home/components/recentarticles.html" %}         
+    <!--Recent Articles End -->
+    <!--Start pagination -->
+        {% include "home/components/paginator.html" %}
+    <!-- End pagination  -->
+    </main>
+{%endblock%}
