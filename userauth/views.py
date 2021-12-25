@@ -8,6 +8,11 @@ from .forms import CodeForm
 from .models import CustomUser
 
 @login_required
+def home_view(request):
+    return render(request, "userauth/home.html")
+
+
+
 def login_view(request):
     form = AuthenticationForm()
     if request.method=="POST":
@@ -20,7 +25,7 @@ def login_view(request):
             request.session['pk'] = user.pk
             
             return redirect('verify')
-        return render(request, "auth.html", {'form': form})
+        return render(request, "userauth/uth.html", {'form': form})
 
 def verify_view(request):
     form = CodeForm()
@@ -38,11 +43,11 @@ def verify_view(request):
             if str(code) == num:
                 code.save()
                 login(request, user)
-                return redirect()
+                return redirect('home')
             else:
                 return redirect('login')
 
-    return render(request, "verify.html", {'form': form})
+    return render(request, "userauth/verify.html", {'form': form})
     # if request.method=="POST":
         # form = CodeForm(request.POST)
         # if form.is_valid():

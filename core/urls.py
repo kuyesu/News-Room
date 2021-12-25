@@ -19,13 +19,16 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from userauth.views import home_view, verify_view, login_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    path('', include('home.urls')),
+    # path('', include('home.urls')),
     path(r'ckeditor/', include('ckeditor_uploader.urls')),
-    path('userauth/', include('userauth.urls')),
+    path('', home_view, name='home'),
+    path('login/', login_view, name="login"),
+    path('verify/', verify_view, 'verify')
 ]
 
 
