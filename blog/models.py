@@ -138,6 +138,7 @@ class WeeklyArticle(models.Model):
         return "{}".format(self.Articles) + " - " + "{}".format(self.updated_at)
 
 class WhatIsNew(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
     title = models.CharField(max_length=70)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
@@ -148,6 +149,7 @@ class WhatIsNew(models.Model):
     modified_time = models.DateTimeField(auto_now_add=True)
     STATUS = (("Draft", 'Draft'), ("Published", 'Published'))
     status = models.CharField(max_length=10, choices=STATUS, null=True)
+    content = RichTextUploadingField(null=True, blank=False)
 
     def __str__(self):
         return "{}".format(self.title) + " - " + "{}".format(self.created_time) + " - " + "{}".format(self.category)
@@ -182,7 +184,7 @@ class ArticleRating(NewsSiteBaseModel):
 
 
 class RelatedArticle(NewsSiteBaseModel):
-    source = models.ForeignKey(Articles, related_name="source_article", on_delete=models.CASCADE)
+    source = models.ForeignKey(Source, related_name="source_article", on_delete=models.CASCADE)
     related = models.ForeignKey(Articles, related_name="related_article", on_delete=models.CASCADE)
     score = models.FloatField()
 
