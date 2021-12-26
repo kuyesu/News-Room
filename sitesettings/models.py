@@ -58,3 +58,11 @@ class AvdvertisementBanner(models.Model):
         verbose_name_plural = "Advertisement"
     def __str__(self):
         return "{}".format(self.name) + "-" + "{}".format(self.updated_at)
+
+
+class SiteName(models.Model):
+    title = models.CharField(max_length=100)
+    
+
+    def __str__(self):
+        return self.title

@@ -24,11 +24,9 @@ from userauth.views import home_view, verify_view, login_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    # path('', include('home.urls')),
+    path('', include('home.urls')),
     path(r'ckeditor/', include('ckeditor_uploader.urls')),
-    path('', home_view, name='home'),
-    path('login/', login_view, name="login"),
-    path('verify/', verify_view, 'verify')
+    
 ]
 
 
