@@ -1,4 +1,6 @@
+
 {% load static %}
+{% block content %}
 <section class="whats-news-area pt-50 pb-20">
     <div class="container">
         <div class="row">
@@ -14,12 +16,11 @@
                         <!--Nav Button  -->                                            
                         <nav>                                                                     
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All</a>
-                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Lifestyle</a>
-                                <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Travel</a>
-                                <a class="nav-item nav-link" id="nav-last-tab" data-toggle="tab" href="#nav-last" role="tab" aria-controls="nav-contact" aria-selected="false">Fashion</a>
-                                <a class="nav-item nav-link" id="nav-Sports" data-toggle="tab" href="#nav-nav-Sport" role="tab" aria-controls="nav-contact" aria-selected="false">Sports</a>
-                                <a class="nav-item nav-link" id="nav-technology" data-toggle="tab" href="#nav-techno" role="tab" aria-controls="nav-contact" aria-selected="false">Technology</a>
+                                
+                                {% for tag in data %}
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">{{tag.tags.name}}</a>
+                                {% endfor %}
+                               
                             </div>
                         </nav>
                         <!--End Nav Button  -->
@@ -34,50 +35,27 @@
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">           
                             <div class="whats-news-caption">
                                 <div class="row">
+                                    
+                                
+                                    
+                                    {% for item in data %}
                                     <div class="col-lg-6 col-md-6">
                                         <div class="single-what-news mb-100">
                                             <div class="what-img">
-                                                <img src="{% static "assets/img/news/whatNews1.jpg" %}" alt="">
-                                            </div>
+                                                {% if item.cover_image %}
+                                                    <img src="{{MEDIA_URL}}{{item.cover_image.url}}" alt="">
+                                                 {% endif %}
+                                                </div>
                                             <div class="what-cap">
-                                                <span class="color1">Night party</span>
-                                                <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
+                                                <span class="color1">{{item.category}}</span>
+                                                <h4><a href="{% url 'article-detail' item.pk %}">{{item.cover_introduction|slice:":70"}}</a></h4>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="single-what-news mb-100">
-                                            <div class="what-img">
-                                                <img src="{% static "assets/img/news/whatNews2.jpg" %}" alt="">
-                                            </div>
-                                            <div class="what-cap">
-                                                <span class="color1">Night party</span>
-                                                <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                            </div>
-                                        </div>
-                                    </div> 
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="single-what-news mb-100">
-                                            <div class="what-img">
-                                                <img src="{% static "assets/img/news/whatNews3.jpg" %}" alt="">
-                                            </div>
-                                            <div class="what-cap">
-                                                <span class="color1">Night party</span>
-                                                <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-md-6">
-                                        <div class="single-what-news mb-100">
-                                            <div class="what-img">
-                                                <img src="{% static "assets/img/news/whatNews4.jpg" %}" alt="">
-                                            </div>
-                                            <div class="what-cap">
-                                                <span class="color1">Night party</span>
-                                                <h4><a href="#">Welcome To The Best Model  Winner Contest</a></h4>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                    {% endfor %}
+
+
                                 </div>
                             </div>
                         </div>
@@ -395,3 +373,4 @@
         </div>
     </div>
 </section>
+{% endblock content %}

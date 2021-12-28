@@ -1,7 +1,12 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 
+from django.urls import reverse
+
 from userauth.models import CustomUser as User
+# from comments.models import Comment
+from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 
@@ -15,7 +20,8 @@ class NewsSiteBaseModel(models.Model):
 
 # blog category
 class Category(NewsSiteBaseModel):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     slug = models.SlugField(
         null=True,
         verbose_name="slug",
@@ -33,7 +39,8 @@ class Category(NewsSiteBaseModel):
         return self.name
 
 class Tag(NewsSiteBaseModel):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     
     LABEL = (
         ('warning', 'warning'),
@@ -49,8 +56,10 @@ class Tag(NewsSiteBaseModel):
     def __str__(self):
         return self.name
 
+    
 class Industry(NewsSiteBaseModel):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     slug = models.SlugField(
         null=True,
         verbose_name="slug",
@@ -69,7 +78,8 @@ class Industry(NewsSiteBaseModel):
 
 
 class Source(NewsSiteBaseModel):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     url = models.URLField(blank=True)
     active = models.BooleanField(default=True)
 
@@ -79,7 +89,8 @@ class Source(NewsSiteBaseModel):
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=100)
+    message = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     photo = models.ImageField(upload_to='images/', blank=True, null=True)
     email = models.EmailField()
     website = models.URLField(blank=True)
@@ -88,7 +99,7 @@ class Author(models.Model):
         return self.name
 
 class Articles(NewsSiteBaseModel):
-    title = models.CharField(max_length=70)
+    title = models.CharField(max_length=70, null=True, blank=False)
     source = models.ForeignKey(Source, on_delete=models.CASCADE, null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -105,6 +116,7 @@ class Articles(NewsSiteBaseModel):
     view_count = models.FloatField(blank=True, null=True)
     rating_count = models.FloatField(blank=True, null=True)
     slug = models.SlugField(max_length=200, unique=True, null=True)
+    # comment = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ['-created_time']
@@ -112,8 +124,24 @@ class Articles(NewsSiteBaseModel):
     def __str__(self):
         return "{}".format(self.title) + " - " + "{}".format(self.created_time) + " - " + "{}".format(self.author)
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.cover_image.url
+        except:
+            url=''
+        return url
+
+    # def get_absolute_url(self):
+    #     return reverse('article-detail', kwargs={'slug':self.slug, 'id':self.id})
+
+    # def get_absolute_url(self):
+    #     return reverse("model_detail", kwargs={"pk": self.pk})
+    
+
 
 class TrendingArticle(models.Model):
+    title = models.CharField(max_length=70, null=True, blank=False)
     Articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -126,6 +154,7 @@ class TrendingArticle(models.Model):
 
 
 class WeeklyArticle(models.Model):
+    title = models.CharField(max_length=70, null=True, blank=False)
     Articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -138,9 +167,9 @@ class WeeklyArticle(models.Model):
         return "{}".format(self.Articles) + " - " + "{}".format(self.updated_at)
 
 class WhatIsNew(models.Model):
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, )
     title = models.CharField(max_length=70)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
     industry = models.ForeignKey(Industry, blank=True, null=True, default=None, on_delete=models.CASCADE)
     cover_image = models.ImageField(upload_to='images/', blank=True, null=True)
@@ -159,7 +188,16 @@ class WhatIsNew(models.Model):
         verbose_name = "What is new"
         verbose_name_plural = "What is new"
 
+    @property
+    def imageURL(self):
+        try:
+            url = self.cover_image.url
+        except:
+            url=''
+        return url
+
 class ArticleMedia(NewsSiteBaseModel):
+    title = models.CharField(max_length=70, null=True, blank=False)
     article = models.ForeignKey(Articles, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     url = models.URLField()
@@ -173,6 +211,7 @@ class ArticleMedia(NewsSiteBaseModel):
 
 # TODO: add reference to User model
 class ArticleRating(NewsSiteBaseModel):
+    title = models.CharField(max_length=70, null=True, blank=False)
     article = models.ForeignKey(Articles, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.FloatField()
@@ -184,6 +223,7 @@ class ArticleRating(NewsSiteBaseModel):
 
 
 class RelatedArticle(NewsSiteBaseModel):
+    title = models.CharField(max_length=70, null=True, blank=False)
     source = models.ForeignKey(Source, related_name="source_article", on_delete=models.CASCADE)
     related = models.ForeignKey(Articles, related_name="related_article", on_delete=models.CASCADE)
     score = models.FloatField()
@@ -195,6 +235,7 @@ class RelatedArticle(NewsSiteBaseModel):
         verbose_name_plural = "Related Articles"
 
 class ArtilcleLike(NewsSiteBaseModel):
+    title = models.CharField(max_length=70, null=True, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Articles, on_delete=models.CASCADE)
     is_like = models.PositiveSmallIntegerField(default=2)
@@ -206,6 +247,7 @@ class ArtilcleLike(NewsSiteBaseModel):
 
 
 class BookmarkArticle(NewsSiteBaseModel):
+    title = models.CharField(max_length=70, null=True, blank=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     article = models.ForeignKey(Articles, on_delete=models.CASCADE)
 
@@ -217,5 +259,3 @@ class BookmarkArticle(NewsSiteBaseModel):
 
 class Feed:
     pass
-
-

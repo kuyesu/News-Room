@@ -3,7 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Social(models.Model):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     url = models.URLField()
 
     class Meta:
@@ -14,14 +15,16 @@ class Social(models.Model):
         return self.name
 
 class Link(models.Model):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     url = models.URLField()
 
     def __str__(self):
         return self.name
 
 class LogoImage(models.Model):
-    brand_name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    brand_name = models.CharField(max_length=100, null=True, blank=False)
     url = models.ImageField()
 
     class Meta:
@@ -32,14 +35,15 @@ class LogoImage(models.Model):
         return self.name
 
 class Video(models.Model):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=70, null=True, blank=False)
+    name = models.CharField(max_length=100, null=True, blank=False)
     url = models.URLField()
 
     def __str__(self):
         return self.name
     
 class Slider(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, null=True, blank=False)
     body = models.TextField()
     image = models.URLField()
 
@@ -47,7 +51,8 @@ class Slider(models.Model):
         return self.title
 
 class AvdvertisementBanner(models.Model):
-    name = models.CharField(max_length=100)
+    
+    name = models.CharField(max_length=100, null=True, blank=False)
     image = models.ImageField(upload_to='images/')
     url = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)

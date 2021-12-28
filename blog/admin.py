@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import *
 from blog.models import Articles
+from comments.admin import CommentInline
+from comments.models import Comment
 # Register your models here.
 
 class AuthorAdmin(admin.ModelAdmin):
@@ -18,10 +20,14 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
     list_filter = ('name',)
 
-class ArticleAdmin(admin.TabularInline):
-    model = Articles
-    list_display = ('title', 'author', 'category', 'status', 'created_time', 'modified_time')
-    list_filter = ('title', 'author', 'category', 'status', 'created_time', 'modified_time')
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 0
+class ArticleAdmin(admin.ModelAdmin):
+    inlines = [
+        CommentInline,
+    ]
+
 
 class ArticleInline(admin.TabularInline):
     model = Articles
@@ -87,7 +93,7 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Industry)
 admin.site.register(Source)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(Articles)
+admin.site.register(Articles, ArticleAdmin)
 admin.site.register(TrendingArticle)
 admin.site.register(WeeklyArticle)
 admin.site.register(WhatIsNew)
