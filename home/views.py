@@ -153,6 +153,6 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['posts'] = Articles.objects.filter(status="Published").order_by('-created_time')
-        context['data'] = WhatIsNew.objects.filter(status="Published").order_by('-created_time')
+        context['data'] = WhatIsNew.objects.filter(status="Published").order_by('-created_time')[:6]
 
         return context
