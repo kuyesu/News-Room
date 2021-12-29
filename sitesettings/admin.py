@@ -16,5 +16,6 @@ class SocialAdmin(admin.ModelAdmin):
 
 admin.site.register(Link, LinkAdmin)
 admin.site.register(Social, SocialAdmin)
-admin.site.register(AvdvertisementBanner)
+admin.site.register(AdvertisementBanner)
 admin.site.register(SiteName)
+admin.site.register(LogoImage)

@@ -3,29 +3,34 @@
 
 <main>
 
-    <!-- Trending Area Start -->
-        {% include "home/components/trending.html" %}
-    <!-- Trending Area End -->
-    <!--   Weekly-News start -->
-        {% include "home/components/weeklyNews.html" %}          
-    <!-- End Weekly-News -->
+    
+    
   
     
     {% block content %}
+    <!-- Trending Area Start -->
+    {% include "home/components/trending.html" %}
+    <!-- Trending Area End -->
+    <!--   Weekly-News start -->
+    {% include "home/components/weeklyNews.html" %}          
+    <!-- End Weekly-News -->
      <!-- Whats New Start -->
      {% include "home/components/whatisnew.html" %}
      <!-- Whats New End -->
     <!--   Weekly2-News start -->
     {% include "home/components/topstories.html" %}
+
+    <!--  Recent Articles start -->
+    {% include "home/components/recentarticles.html" %}         
+    <!--Recent Articles End -->
+    <!--Start pagination -->
+        {% include "home/components/paginator.html" %}
+    <!-- End pagination  -->
+    
     {% endblock content %} 
     <!-- End Weekly-News -->
     <!-- Start Youtube -->
         {% comment %} {% include "home/components/youtube.html" %} {% endcomment %}
     <!-- End Start youtube -->
-    <!--  Recent Articles start -->
-        {% include "home/components/recentarticles.html" %}         
-    <!--Recent Articles End -->
-    <!--Start pagination -->
-        {% include "home/components/paginator.html" %}
-    <!-- End pagination  -->
+    
     </main>

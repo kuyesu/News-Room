@@ -1,3 +1,6 @@
+from distutils.command.upload import upload
+from random import choice
+from telnetlib import STATUS
 from django.db import models
 
 # Create your models here.
@@ -23,16 +26,16 @@ class Link(models.Model):
         return self.name
 
 class LogoImage(models.Model):
-    title = models.CharField(max_length=70, null=True, blank=False)
+    brandlogo = models.ImageField(upload_to='images/', null=True, blank=False)
     brand_name = models.CharField(max_length=100, null=True, blank=False)
-    url = models.ImageField()
+    
 
     class Meta:
         verbose_name = "Logo Image"
         verbose_name_plural = "Logo Image"
 
     def __str__(self):
-        return self.name
+        return self.brand_name
 
 class Video(models.Model):
     title = models.CharField(max_length=70, null=True, blank=False)
@@ -50,8 +53,12 @@ class Slider(models.Model):
     def __str__(self):
         return self.title
 
-class AvdvertisementBanner(models.Model):
-    
+class AdvertisementBanner(models.Model):
+    STATUS = (
+        ('Top Banner', 'Top Banner'),
+        ('On side', 'On side')
+    )
+    where_to_locate = models.CharField(choices=STATUS, blank=False, null=True, max_length=12)
     name = models.CharField(max_length=100, null=True, blank=False)
     image = models.ImageField(upload_to='images/')
     url = models.URLField(blank=True)
@@ -59,11 +66,12 @@ class AvdvertisementBanner(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Advertisements"
-        verbose_name_plural = "Advertisement"
+        verbose_name = "Advertisement (Ads)"
+        verbose_name_plural = "Advertisement (Ads)"
     def __str__(self):
         return "{}".format(self.name) + "-" + "{}".format(self.updated_at)
 
+    
 
 class SiteName(models.Model):
     title = models.CharField(max_length=100)

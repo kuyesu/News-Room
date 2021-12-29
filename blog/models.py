@@ -142,20 +142,22 @@ class Articles(NewsSiteBaseModel):
 
 class TrendingArticle(models.Model):
     title = models.CharField(max_length=70, null=True, blank=False)
-    Articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE, related_name="treding_post")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    STATUS = (("List", 'List'), ("Top", 'Top'))
+    status_choice = models.CharField(max_length=10, choices=STATUS, null=True, default="List")
 
     class Meta:
         ordering = ['-created_at']
         verbose_name_plural = "Trending Articles"
     def __str__(self):
-        return "{}".format(self.Articles) + " - " + "{}".format(self.updated_at)
+        return "{}".format(self.articles) + " - " + "{}".format(self.updated_at) + "{}".format(self.title)
 
 
 class WeeklyArticle(models.Model):
     title = models.CharField(max_length=70, null=True, blank=False)
-    Articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -164,7 +166,21 @@ class WeeklyArticle(models.Model):
         verbose_name_plural = "Weekley Articles"
 
     def __str__(self):
-        return "{}".format(self.Articles) + " - " + "{}".format(self.updated_at)
+        return "{}".format(self.articles) + " - " + "{}".format(self.updated_at)
+
+class RecentArticle(models.Model):
+    title = models.CharField(max_length=70, null=True, blank=False)
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name_plural = "Recent Articles"
+
+    def __str__(self):
+        return "{}".format(self.articles) + " - " + "{}".format(self.updated_at)
+
 
 class WhatIsNew(models.Model):
     author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, blank=True, )

@@ -28,16 +28,20 @@
                <div class="container">
                     <div class="row d-flex align-items-center">
                         <!-- Logo -->
+                        {% for logo in sitelogo %}
                         <div class="col-xl-3 col-lg-3 col-md-3">
                             <div class="logo">
-                                <a href="index.html"><img src="{% static "assets/img/logo/logo.png" %}" alt=""></a>
+                                <a href="index.html"><img src="{{ logo.brandlogo.url }}" alt=""></a>
                             </div>
                         </div>
+                        {% endfor %}
+                        {% for content in adbanner %}
                         <div class="col-xl-9 col-lg-9 col-md-9">
                             <div class="header-banner f-right ">
-                                <img src="{% static "assets/img/hero/header_card.jpg" %}" alt="">
+                                <img src="{{ content.image.url}}" alt="">
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
                </div>
             </div>

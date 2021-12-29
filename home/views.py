@@ -16,7 +16,7 @@ from blog.models import *
 from comments.forms import CommentForm 
 from comments.models import Comment 
 from django.urls import reverse_lazy
-
+from sitesettings.models import *
 
 
 # def home(request):
@@ -47,7 +47,15 @@ class ArticleListView(ListView):
 
     # def get_absolute_url(self):
     #     return reverse('article-detail', args=[str(self.pk)])
-    
+
+class TrendingArticleListView(ListView):
+    model = TrendingArticle
+    template_name = 'home/home.html'
+    context_object_name = 'trending' 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_dat(**kwargs)
+        context['now'] = timezone.now()
+        return context
    
 
   
@@ -154,5 +162,12 @@ class HomeView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['posts'] = Articles.objects.filter(status="Published").order_by('-created_time')
         context['data'] = WhatIsNew.objects.filter(status="Published").order_by('-created_time')[:6]
-
+        context['trending_top'] = TrendingArticle.objects.filter(status_choice="Top").order_by('-created_at')[:1]
+        context['trending'] = TrendingArticle.objects.filter(status_choice="List").order_by('-created_at')[:3]
+        context['category'] = Articles.objects.order_by('-created_time')[:6]
+        context['weekly'] = WeeklyArticle.objects.order_by('-created_at')
+        context['recent'] = RecentArticle.objects.order_by('-created_at')
+        context['adbanner'] = AdvertisementBanner.objects.filter(where_to_locate='Top Banner').order_by('-created_at')[:1]
+        context['sitelogo'] = LogoImage.objects.all()[:1]
+        context['sidead'] = AdvertisementBanner.objects.filter(where_to_locate='On side').order_by('-created_at')[:1]
         return context
