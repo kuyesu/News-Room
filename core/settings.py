@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'comments',
     'sitesettings',
     'userauth',
+    'news',
 
     'crispy_forms',
     'materializecssform',

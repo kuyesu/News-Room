@@ -17,10 +17,14 @@ from comments.forms import CommentForm
 from comments.models import Comment 
 from django.urls import reverse_lazy
 from sitesettings.models import *
+from newsapi import NewsApiClient
 
 
 # def home(request):
 #     return render(request, 'home/home.html')
+
+
+
 class WhatIsNewView(ListView):
     model = WhatIsNew
     template_name = 'home/home.html'
@@ -170,4 +174,10 @@ class HomeView(TemplateView):
         context['adbanner'] = AdvertisementBanner.objects.filter(where_to_locate='Top Banner').order_by('-created_at')[:1]
         context['sitelogo'] = LogoImage.objects.all()[:1]
         context['sidead'] = AdvertisementBanner.objects.filter(where_to_locate='On side').order_by('-created_at')[:1]
+        
+        context['links'] = Link.objects.all()
         return context
+
+
+
+

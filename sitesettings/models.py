@@ -18,6 +18,15 @@ class Social(models.Model):
         return self.name
 
 class Link(models.Model):
+    CHOICE = (
+        ('1', 'Facebook'),
+        ('2', 'Twitter'),
+        ('3', 'Instagram'),
+        ('4', 'Youtube'),
+        ('5', 'Linkedin'),
+        ('6', 'Google'),
+        ('7', 'Pinterest'),
+    )
     title = models.CharField(max_length=70, null=True, blank=False)
     name = models.CharField(max_length=100, null=True, blank=False)
     url = models.URLField()
