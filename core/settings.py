@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
 
 ]
+
+# CRISPY_TEMPLATE_PACK = 'bootstrap5'
 SITE_ID = 1
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

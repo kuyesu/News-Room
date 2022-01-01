@@ -1,5 +1,11 @@
+
 from django.shortcuts import render
 from newsapi import NewsApiClient
+from django.template.loader import render_to_string
+
+from django import template
+# Create an object of Library()
+register = template.Library()
 
 # Create your views here.
 
@@ -31,6 +37,7 @@ def bbc(request):
     return render(request, 'news/bbc.html', context={"mylist":mylist})
 
 
+@register.inclusion_tag('news/ajazeera.html', takes_context=True)
 def aljazeera(request):
     newsapi = NewsApiClient(api_key)
     topheadlines = newsapi.get_top_headlines(sources='al-jazeera-english')

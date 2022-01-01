@@ -25,7 +25,7 @@ def login_view(request):
             request.session['pk'] = user.pk
             
             return redirect('verify')
-        return render(request, "userauth/uth.html", {'form': form})
+    return render(request, "userauth/auth.html", {'form': form})
 
 def verify_view(request):
     form = CodeForm()
