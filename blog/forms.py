@@ -1,9 +1,11 @@
+from cProfile import label
 from pyexpat import model
 from django import forms
 from .models import *
 
 class CategoryForm(forms.Form):
     name = forms.CharField(
+        label="Tag Name",
         widget=forms.TextInput(
             attrs={
                 "placeholder" : "Category Name",
@@ -12,6 +14,7 @@ class CategoryForm(forms.Form):
         )
     )
     slug = forms.URLField(
+        label="Slug",
         widget=forms.URLInput(
             attrs={
                 "placeholder" : "Category Slug",
@@ -30,6 +33,7 @@ class CategoryForm(forms.Form):
     
 class TagForm(forms.Form):
     name = forms.CharField(
+        label = "Tage Name",
         widget=forms.TextInput(
             attrs={
                 "placeholder" : "Tag Name",
@@ -38,6 +42,7 @@ class TagForm(forms.Form):
         )
     )
     label = forms.CharField(
+        label="Label",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Tag Label",
@@ -114,6 +119,7 @@ class SourceForm(forms.Form):
 
 class AUthorForm(forms.Form):
     name = forms.CharField(
+        label = "Author Name",
         widget= forms.TextInput(
             attrs={
                 "placeholder" : "Author Name",
@@ -122,6 +128,7 @@ class AUthorForm(forms.Form):
         )
     )
     photo = forms.ImageField(
+        label = "Upload Photo",
         widget=forms.FileInput(
             attrs={
                 "placeholder" : "Author Photo",
@@ -130,6 +137,7 @@ class AUthorForm(forms.Form):
         )
     )
     email = forms.EmailField(
+        label = "Author Email",
         widget=forms.EmailInput(
             attrs={
                 "placeholder" : "Author Email",
@@ -138,6 +146,7 @@ class AUthorForm(forms.Form):
         )
     )
     website = forms.URLField(
+        label = "Author Website",
         widget=forms.URLInput(
             attrs={
                 "placeholder" : "Author Website",
@@ -156,6 +165,7 @@ class AUthorForm(forms.Form):
 
 class ArticlesForm(forms.Form):
     title = forms.CharField(
+        label = "Article Title",
         widget=forms.TextInput(
             attrs={
                 "placeholder" : "Article Title",
@@ -164,6 +174,7 @@ class ArticlesForm(forms.Form):
         )
     )
     source = forms.ModelChoiceField(
+        label = "Article Source",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Source",
@@ -173,6 +184,7 @@ class ArticlesForm(forms.Form):
         queryset=Source.objects.all()
     )
     category = forms.ModelChoiceField(
+        label = "Article Category",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Category",
@@ -182,6 +194,7 @@ class ArticlesForm(forms.Form):
         queryset=Category.objects.all()
     )
     tags = forms.ModelMultipleChoiceField(
+        label = "Article Tags",
         widget=forms.SelectMultiple(
             attrs={
                 "placeholder" : "Article Tags",
@@ -191,6 +204,7 @@ class ArticlesForm(forms.Form):
         queryset=Tag.objects.all()
     )
     industry = forms.ModelChoiceField(
+        label = "Article Industry",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Industry",
@@ -201,6 +215,7 @@ class ArticlesForm(forms.Form):
     )
     
     author = forms.ModelChoiceField(
+        label = "Article Author",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Author",
@@ -210,6 +225,7 @@ class ArticlesForm(forms.Form):
         queryset=Author.objects.all()
     )
     cover_image = forms.ImageField(
+        label = "Article Cover Image",
         widget=forms.FileInput(
             attrs={
                 "placeholder" : "Article Cover Image",
@@ -218,6 +234,7 @@ class ArticlesForm(forms.Form):
         )
     )
     cover_introduction = forms.CharField(
+        label = "Article Cover Introduction",
         widget=forms.Textarea(
             attrs={
                 "placeholder" : "Article Cover Introduction",
@@ -226,6 +243,7 @@ class ArticlesForm(forms.Form):
         )
     )
     content = forms.CharField(
+        label = "Article Content",
         widget=forms.Textarea(
             attrs={
                 "placeholder" : "Article Content",
@@ -234,6 +252,7 @@ class ArticlesForm(forms.Form):
         )
     )
     created_time = forms.DateTimeField(
+        label = "Article Created Time",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Article Created Time",
@@ -242,6 +261,7 @@ class ArticlesForm(forms.Form):
         )
     )
     modified_time = forms.DateTimeField(
+        label = "Article Modified Time",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Article Modified Time",
@@ -250,6 +270,7 @@ class ArticlesForm(forms.Form):
         )
     )
     status = forms.BooleanField(
+        label = "Article Status",
         widget=forms.RadioSelect(
             attrs={
                 "placeholder" : "Article Status",
@@ -258,6 +279,7 @@ class ArticlesForm(forms.Form):
         )
     )
     avg_rating = forms.FloatField(
+        label = "Article Avg Rating",
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Article Avg Rating",
@@ -266,6 +288,7 @@ class ArticlesForm(forms.Form):
         )
     )
     view_count = forms.IntegerField(
+        label = "Article View Count",
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Article View Count",
@@ -274,6 +297,7 @@ class ArticlesForm(forms.Form):
         )
     )
     rating_count = forms.IntegerField(
+        label = "Article Rating Count",
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Article Rating Count",
@@ -282,6 +306,7 @@ class ArticlesForm(forms.Form):
         )
     )
     slug = forms.URLField(
+        label = "Article Slug",
         widget=forms.URLInput(
             attrs={
                 "placeholder" : "Article Slug",
@@ -299,6 +324,7 @@ class ArticlesForm(forms.Form):
     
 class TrendingArticleForm(forms.Form):
     Articles = forms.ModelChoiceField(
+        label = "Trending Article",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Trending Article",
@@ -308,6 +334,7 @@ class TrendingArticleForm(forms.Form):
         queryset=Articles.objects.all()
     )
     created_at = forms.DateTimeField(
+        label = "Trending Article Created At",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Trending Time",
@@ -316,6 +343,7 @@ class TrendingArticleForm(forms.Form):
         )
     )
     updated_at = forms.DateTimeField(
+        label = "Trending Article Updated At",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Trending Time",
@@ -333,6 +361,7 @@ class TrendingArticleForm(forms.Form):
 
 class WeeklyArticleForm(forms.Form):
     Articles = forms.ModelChoiceField(
+        label = "Weekly Article",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Weekly Article",
@@ -342,6 +371,7 @@ class WeeklyArticleForm(forms.Form):
         queryset=Articles.objects.all()
     )
     created_at = forms.DateTimeField(
+        label = "Weekly Article Created At",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Weekly Time",
@@ -350,6 +380,7 @@ class WeeklyArticleForm(forms.Form):
         )
     )
     updated_at = forms.DateTimeField(
+        label = "Weekly Article Updated At",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Weekly Time",
@@ -367,6 +398,7 @@ class WeeklyArticleForm(forms.Form):
 
 class WhatIsNewForm(forms.Form):
     author = forms.ModelChoiceField(
+        label = "What Is New Author",
         widget=forms.Select(
             attrs={
                 "placeholder" : "What Is New Author",
@@ -377,6 +409,7 @@ class WhatIsNewForm(forms.Form):
     )
 
     title = forms.CharField(
+        label = "What Is New Title",
         widget=forms.TextInput(
             attrs={
                 "placeholder" : "Article Title",
@@ -386,6 +419,7 @@ class WhatIsNewForm(forms.Form):
     )
     
     category = forms.ModelChoiceField(
+        label = "What Is New Category",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Category",
@@ -395,6 +429,7 @@ class WhatIsNewForm(forms.Form):
         queryset=Category.objects.all()
     )
     tags = forms.ModelMultipleChoiceField(
+        label = "What Is New Tags",
         widget=forms.SelectMultiple(
             attrs={
                 "placeholder" : "Article Tags",
@@ -404,6 +439,7 @@ class WhatIsNewForm(forms.Form):
         queryset=Tag.objects.all()
     )
     industry = forms.ModelChoiceField(
+        label = "What Is New Industry",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Industry",
@@ -414,6 +450,7 @@ class WhatIsNewForm(forms.Form):
     )
     
     author = forms.ModelChoiceField(
+        label = "Author",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Author",
@@ -423,6 +460,7 @@ class WhatIsNewForm(forms.Form):
         queryset=Author.objects.all()
     )
     cover_image = forms.ImageField(
+        label = "Article Cover Image",
         widget=forms.FileInput(
             attrs={
                 "placeholder" : "Article Cover Image",
@@ -431,6 +469,7 @@ class WhatIsNewForm(forms.Form):
         )
     )
     cover_introduction = forms.CharField(
+        label = "Article Cover Introduction",
         widget=forms.Textarea(
             attrs={
                 "placeholder" : "Article Cover Introduction",
@@ -439,6 +478,7 @@ class WhatIsNewForm(forms.Form):
         )
     )
     content = forms.CharField(
+        label = "Article Content",
         widget=forms.Textarea(
             attrs={
                 "placeholder" : "Article Content",
@@ -447,6 +487,7 @@ class WhatIsNewForm(forms.Form):
         )
     )
     created_time = forms.DateTimeField(
+        label = "Article Created Time",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Article Created Time",
@@ -455,6 +496,7 @@ class WhatIsNewForm(forms.Form):
         )
     )
     modified_time = forms.DateTimeField(
+        label = "Article Modified Time",
         widget=forms.DateTimeInput(
             attrs={
                 "placeholder" : "Article Modified Time",
@@ -463,6 +505,7 @@ class WhatIsNewForm(forms.Form):
         )
     )
     status = forms.BooleanField(
+        label = "Article Status",
         widget=forms.RadioSelect(
             attrs={
                 "placeholder" : "Article Status",
@@ -480,6 +523,7 @@ class WhatIsNewForm(forms.Form):
 
 class ArticleMediaForm(forms.Form):
     article = forms.ModelChoiceField(
+        label = "Article Media",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Media",
@@ -489,6 +533,7 @@ class ArticleMediaForm(forms.Form):
         queryset=Articles.objects.all()
     )
     category = forms.ModelChoiceField(
+        label = "Article Media Category",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Media",
@@ -498,6 +543,7 @@ class ArticleMediaForm(forms.Form):
         queryset=Category.objects.all()
     )
     url = forms.URLField(
+        label = "Article Media Url",
         widget=forms.URLInput(
             attrs={
                 "placeholder" : "Article Media",
@@ -515,6 +561,7 @@ class ArticleMediaForm(forms.Form):
 
 class ArticleRatingForm(forms.Form):
     article = forms.ModelChoiceField(
+        label = "Article Rating",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Rating",
@@ -524,6 +571,7 @@ class ArticleRatingForm(forms.Form):
         queryset=Articles.objects.all()
     )
     rating = forms.IntegerField(
+        label = "Article Rating",
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Article Rating",
@@ -532,6 +580,7 @@ class ArticleRatingForm(forms.Form):
         )
     )
     user = forms.ModelChoiceField(
+        label = "Article Rating User",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Rating",
@@ -551,6 +600,7 @@ class ArticleRatingForm(forms.Form):
 
 class RelatedArticleForm(forms.Form):
     source = forms.ModelChoiceField(
+        label = "Related Article Source",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Related Article",
@@ -560,6 +610,7 @@ class RelatedArticleForm(forms.Form):
         queryset=Source.objects.all()
     )
     related = forms.ModelChoiceField(
+        label = "Related Article",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Related Article",
@@ -569,6 +620,7 @@ class RelatedArticleForm(forms.Form):
         queryset=Articles.objects.all()
     )
     score = forms.IntegerField(
+        label = "Related Article Score",
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Related Article",
@@ -586,6 +638,7 @@ class RelatedArticleForm(forms.Form):
 
 class ArticleLikeForm(forms.Form):
     article = forms.ModelChoiceField(
+        label = "Article Like",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Like",
@@ -595,6 +648,7 @@ class ArticleLikeForm(forms.Form):
         queryset=Articles.objects.all()
     )
     user = forms.ModelChoiceField(
+        label = "Article Like User",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Article Like",
@@ -604,6 +658,7 @@ class ArticleLikeForm(forms.Form):
         queryset=User.objects.all()
     )
     is_like = forms.IntegerField(
+        label = "Article Like",
         widget=forms.NumberInput(
             attrs={
                 "placeholder" : "Article Like",
@@ -622,6 +677,7 @@ class ArticleLikeForm(forms.Form):
 
 class BookmarkArticleForm(forms.Form):
     article = forms.ModelChoiceField(
+        label = "Bookmark Article",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Bookmark Article",
@@ -631,6 +687,7 @@ class BookmarkArticleForm(forms.Form):
         queryset=Articles.objects.all()
     )
     user = forms.ModelChoiceField(
+        label = "Bookmark Article User",
         widget=forms.Select(
             attrs={
                 "placeholder" : "Bookmark Article",
